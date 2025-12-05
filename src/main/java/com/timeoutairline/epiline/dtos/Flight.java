@@ -1,5 +1,8 @@
 package com.timeoutairline.epiline.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Flight {
     private Long flightNum;
     private String depCity;
@@ -17,6 +20,7 @@ public class Flight {
     private Float prSeatPrice;
     private Float bsSeatPrice;
     private Float ecSeatPrice;
+    private List<Book> books = new ArrayList<>();
 
 
     public Long getFlightNum(){
@@ -83,6 +87,11 @@ public class Flight {
         return ecSeatPrice;
     }
 
+    public List<Book> getBooks(){
+        return books;
+    }
+
+
     public void setFlightNum(Long flightNum){
         this.flightNum = flightNum;
     }
@@ -146,4 +155,9 @@ public class Flight {
     public void setEcSeatPrice(Float ecSeatPrice){
         this.ecSeatPrice = ecSeatPrice;
     }
+
+    public void setBooks(List<Book> books){
+        this.books = books;
+    }
+
 }
