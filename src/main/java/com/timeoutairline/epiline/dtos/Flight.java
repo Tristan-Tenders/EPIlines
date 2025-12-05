@@ -21,6 +21,7 @@ public class Flight {
     private Float bsSeatPrice;
     private Float ecSeatPrice;
     private List<Book> books = new ArrayList<>();
+    private List<MilesReward> milesRewards = new ArrayList<>();
 
 
     public Long getFlightNum(){
@@ -91,6 +92,9 @@ public class Flight {
         return books;
     }
 
+    public List<MilesReward> getMilesRewards(){
+        return milesRewards;
+    }
 
     public void setFlightNum(Long flightNum){
         this.flightNum = flightNum;
@@ -158,6 +162,10 @@ public class Flight {
 
     public void setBooks(List<Book> books){
         this.books = books;
+    }
+
+    public void setMilesRewards(List<MilesReward> milesRewards){
+        this.milesRewards = milesRewards;
     }
 
 }

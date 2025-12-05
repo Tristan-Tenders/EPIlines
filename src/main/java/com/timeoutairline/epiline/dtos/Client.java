@@ -8,9 +8,9 @@ public class Client {
     private Long numPassport;
     private Users user;
     private List<Book> books = new ArrayList<>();
+    private List<MilesReward> milesRewards = new ArrayList<>();
 
     public Long getNumPassport(){
-
         return numPassport;
     }
 
@@ -18,13 +18,17 @@ public class Client {
         return books;
     }
 
-    public void setNumPassport(Long numPassport){
-
-        this.numPassport = numPassport;
-    }
-
     public Users getUser(){
         return user;
+    }
+
+    public List<MilesReward> getMilesRewards(){
+        return milesRewards;
+    }
+
+
+    public void setNumPassport(Long numPassport){
+        this.numPassport = numPassport;
     }
     
     public void setUser(Users user){
@@ -34,5 +38,9 @@ public class Client {
     public void setBooks(List<Book> books){
         this.books = books;
     }
+
+    public void setMilesRewards(List<MilesReward> milesRewards){
+        this.milesRewards = milesRewards;
+}
 
 }
