@@ -1,5 +1,6 @@
 package com.timeoutairline.epiline.dtos;
 
+import java.util.List;
 
 public class Plane {
 
@@ -7,6 +8,7 @@ public class Plane {
     private String brand;
     private String model;
     private Integer manYear;
+    private List<Flight> flights;
 
     public Long getPlaneId(){
         return planeId;
@@ -24,6 +26,10 @@ public class Plane {
         return manYear;
     }
 
+    public List<Flight> getFlights(){
+        return flights;
+    }
+
     public void setPlaneId(Long planeId){
         this.planeId = planeId;
     }
@@ -38,6 +44,10 @@ public class Plane {
 
     public void setManYear(Integer manYear){
         this.manYear = manYear;
+    }
+
+    public void setFlights(List<Flight> flights){
+        this.flights = flights;
     }
 
 }

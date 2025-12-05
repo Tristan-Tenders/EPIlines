@@ -5,6 +5,7 @@ public class Employee {
     private Integer empNum;
     private String profession;
     private String title;
+    private Users user;
 
     public Integer getEmpNum(){
         return empNum;
@@ -18,6 +19,10 @@ public class Employee {
         return title;
     }
 
+    public Users getUser(){
+        return user;
+    }
+
     public void setEmpNum(Integer empNum){
         this.empNum = empNum;
     }
@@ -28,6 +33,10 @@ public class Employee {
 
     public void setTitle(String title){
         this.title = title;
+    }
+
+    public void setUser(Users user){
+        this.user = user;
     }
 
 }

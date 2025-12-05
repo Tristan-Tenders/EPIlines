@@ -1,12 +1,14 @@
 package com.timeoutairline.epiline.dtos;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Airport {
-
     private Long airportId;
     private String name;
     private String country;
     private String city;
-
+    private List<Flight> flights = new ArrayList<>();
+    
     public Long getAirId(){
         return airportId;
     }
@@ -21,6 +23,10 @@ public class Airport {
 
     public String getCity(){
         return city;
+    }
+
+    public List<Flight> getFlights(){
+        return flights;
     }
 
     public void setAirId(Long airportId){
@@ -38,5 +44,8 @@ public class Airport {
     public void setCity(String city){
         this.city = city;
     }
-
+    
+    public void setFlights(List<Flight> flights){
+        this.flights = flights;
+    }
 }
