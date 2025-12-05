@@ -8,6 +8,8 @@ public class Users {
     private String email;
     private Integer phone;
     private String birthdate;
+    private Client client;
+    private Employee employee;
 
     //getters
     public Integer getId() {
@@ -31,6 +33,15 @@ public class Users {
     public String getBirthdate(){
         return birthdate;
     }
+
+    public Client getClient(){
+        return client;
+    }
+
+    public Employee getEmployee(){
+        return employee;
+    }
+
     //Setters
     public void setId(Integer id) {
         this.id = id;
@@ -53,4 +64,13 @@ public class Users {
     public void setBirthdate(String birthdate){
         this.birthdate=birthdate;
     }
+
+    public void setClient(Client client){
+        this.client = client;
+    }
+
+    public void setEmployee(Employee employee){
+        this.employee = employee;
+    }
+
 }
