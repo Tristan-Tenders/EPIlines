@@ -34,3 +34,5 @@ build/
 
 ###DS_STORE###
 .DS_Store
+src/main/.DS_Store
+src/.DS_Store
