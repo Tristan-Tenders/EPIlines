@@ -1,11 +1,14 @@
 package com.timeoutairline.epiline.dtos;
 
+/**
+ * Employee DTO - Updated to use UserDTO instead of Users
+ */
 public class Employee {
 
     private Integer empNum;
     private String profession;
     private String title;
-    private Users user;
+    private UserDTO user;  // Changed from Users to UserDTO
 
     public Integer getEmpNum(){
         return empNum;
@@ -19,7 +22,7 @@ public class Employee {
         return title;
     }
 
-    public Users getUser(){
+    public UserDTO getUser(){  // Changed return type
         return user;
     }
 
@@ -35,8 +38,7 @@ public class Employee {
         this.title = title;
     }
 
-    public void setUser(Users user){
+    public void setUser(UserDTO user){  // Changed parameter type
         this.user = user;
     }
-
 }

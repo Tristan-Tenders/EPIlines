@@ -3,10 +3,13 @@ package com.timeoutairline.epiline.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Client DTO - Updated to use UserDTO instead of Users
+ */
 public class Client {
 
     private Long numPassport;
-    private Users user;
+    private UserDTO user;  // Changed from Users to UserDTO
     private List<Book> books = new ArrayList<>();
     private List<MilesReward> milesRewards = new ArrayList<>();
 
@@ -18,7 +21,7 @@ public class Client {
         return books;
     }
 
-    public Users getUser(){
+    public UserDTO getUser(){  // Changed return type
         return user;
     }
 
@@ -30,8 +33,8 @@ public class Client {
     public void setNumPassport(Long numPassport){
         this.numPassport = numPassport;
     }
-    
-    public void setUser(Users user){
+
+    public void setUser(UserDTO user){  // Changed parameter type
         this.user = user;
     }
 
@@ -41,6 +44,5 @@ public class Client {
 
     public void setMilesRewards(List<MilesReward> milesRewards){
         this.milesRewards = milesRewards;
-}
-
+    }
 }
