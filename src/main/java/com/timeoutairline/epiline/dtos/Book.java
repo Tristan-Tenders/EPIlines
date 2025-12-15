@@ -1,6 +1,19 @@
 package com.timeoutairline.epiline.dtos;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "book")
+
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long reservationId;
     private Flight flight;
     private Long flightId;

@@ -1,7 +1,18 @@
 package com.timeoutairline.epiline.dtos;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "miles_reward")
 
 public class MilesReward {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     private Client client;
     private Long clientId;
