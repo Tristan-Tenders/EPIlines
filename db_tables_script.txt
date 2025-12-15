@@ -1,0 +1,84 @@
+-- Create Users table (base entity)
+CREATE TABLE users (
+    id_user SERIAL PRIMARY KEY,
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    birthdate VARCHAR(20)
+);
+
+-- Create Client table (extends User)
+CREATE TABLE client (
+    id_client SERIAL PRIMARY KEY,
+    id_user INTEGER NOT NULL UNIQUE,
+    num_passport VARCHAR(50) UNIQUE NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
+);
+
+-- Create Employee table (extends User)
+CREATE TABLE employee (
+    id_employee SERIAL PRIMARY KEY,
+    id_user INTEGER NOT NULL UNIQUE,
+    num_emp VARCHAR(50) UNIQUE NOT NULL,
+    profession VARCHAR(100),
+    title VARCHAR(100),
+    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE
+);
+
+-- Create Airport table
+CREATE TABLE airport (
+    id_airport SERIAL PRIMARY KEY,
+    name_airport VARCHAR(100) NOT NULL,
+    country_airport VARCHAR(100) NOT NULL,
+    city_airport VARCHAR(100) NOT NULL
+);
+
+-- Create Plane table
+CREATE TABLE plane (
+    id_plane SERIAL PRIMARY KEY,
+    brand VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    manufacturing_year INTEGER
+);
+
+-- Create Flight table
+CREATE TABLE flight (
+    id_flight SERIAL PRIMARY KEY,
+    flight_number VARCHAR(50) UNIQUE NOT NULL,
+    departure_city VARCHAR(100) NOT NULL,
+    arrival_city VARCHAR(100) NOT NULL,
+    departure_hour VARCHAR(10) NOT NULL,
+    arrival_hour VARCHAR(10) NOT NULL,
+    departure_airport INTEGER NOT NULL,
+    arrival_airport INTEGER NOT NULL,
+    id_plane INTEGER NOT NULL,
+    number_of_seat INTEGER NOT NULL,
+    first_class_seat_price DECIMAL(10, 2),
+    premium_seat_price DECIMAL(10, 2),
+    economics_class_price DECIMAL(10, 2),
+    FOREIGN KEY (departure_airport) REFERENCES airport(id_airport) ON DELETE RESTRICT,
+    FOREIGN KEY (arrival_airport) REFERENCES airport(id_airport) ON DELETE RESTRICT,
+    FOREIGN KEY (id_plane) REFERENCES plane(id_plane) ON DELETE RESTRICT
+);
+
+-- Create Book table (Reservation)
+CREATE TABLE book (
+    id_reservation SERIAL PRIMARY KEY,
+    id_flight INTEGER NOT NULL,
+    id_client INTEGER NOT NULL,
+    type_of_seat VARCHAR(50) NOT NULL,
+    FOREIGN KEY (id_flight) REFERENCES flight(id_flight) ON DELETE CASCADE,
+    FOREIGN KEY (id_client) REFERENCES client(id_client) ON DELETE CASCADE
+);
+
+-- Create MilesReward table
+CREATE TABLE miles_reward (
+    id_miles SERIAL PRIMARY KEY,
+    id_client INTEGER NOT NULL,
+    id_flight INTEGER NOT NULL,
+    booking_date DATE NOT NULL,
+    FOREIGN KEY (id_client) REFERENCES client(id_client) ON DELETE CASCADE,
+    FOREIGN KEY (id_flight) REFERENCES flight(id_flight) ON DELETE CASCADE
+);
