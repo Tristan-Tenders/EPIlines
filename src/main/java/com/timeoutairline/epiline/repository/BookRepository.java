@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * BookRepository - Data access layer for Book (Reservation) entity
- * Spring Data JPA automatically implements these methods
- */
+
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     // Find reservations by flight number

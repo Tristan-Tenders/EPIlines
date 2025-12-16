@@ -19,10 +19,41 @@ POST http://localhost:8080/api/airports
 PUT - update airport
 PUT http://localhost:8080/api/airports/1
 {
-  "name": "Charles de Gaulle Airport Updated",
-  "country": "France",
-  "city": "Paris"
+        "airportId": 26,
+        "name": "Sofia Airport",
+        "country": "Not Bulgaria",
+        "city": "Sofia"
 }
 
 DELETE - delete airport
 DELETE http://localhost:8080/api/airports/1
+
+Book (Reservation) CRUD operations
+
+GET
+GET http://localhost:8080/api/reservations (get all)
+GET http://localhost:8080/api/reservations/1 (get by ID)
+GET http://localhost:8080/api/reservations/flight/1 get by flight ID
+GET http://localhost:8080/api/reservations/client/2 get by clients ID
+GET http://localhost:8080/api/reservations/seat/BUSINESS get reserved seats by type
+
+POST - create and save reservation
+POST http://localhost:8080/api/reservations
+{
+  "flightNum": 1,
+  "clientId": 1,
+  "typeSeat": "ECONOMY"
+}
+
+PUT - update reservation
+PUT http://localhost:8080/api/reservations/4
+{
+    "reservationId": 4,
+    "typeSeat": "FIRST",
+    "clientId": 1,
+    "flightNum": 1
+}
+
+DELETE - delete reservation
+DELETE http://localhost:8080/api/reservations/4
+

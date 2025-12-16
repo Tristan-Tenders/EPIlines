@@ -1,13 +1,9 @@
 package com.timeoutairline.epiline.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-/**
- * Book Entity - Represents reservations table in database
- * Manual getters/setters (matching your Airport entity style)
- */
 @Entity
 @Table(name = "reservations")
 public class Book {
@@ -17,6 +13,7 @@ public class Book {
     
     @ManyToOne
     @JoinColumn(name = "flight_num", nullable = false)
+    @JsonIgnore
     private Flight flight;
     
     @ManyToOne
@@ -70,6 +67,32 @@ public class Book {
     
     public void setTypeSeat(String typeSeat){
         this.typeSeat = typeSeat;
+    }
+    
+    @JsonProperty("flightNum")
+    public Long getFlightNum() {
+        return flight != null ? flight.getFlightNum() : null;
+    }
+    
+    @JsonProperty("clientId")
+    public Long getClientId() {
+        return client != null ? client.getClientId() : null;
+    }
+
+    @JsonProperty("flightNum")
+    public void setFlightNum(Long flightNum) {
+        if (this.flight == null) {
+            this.flight = new Flight();
+        }
+        this.flight.setFlightNum(flightNum);
+    }
+
+    @JsonProperty("clientId")
+    public void setClientId(Long clientId) {
+        if (this.client == null) {
+            this.client = new Client();
+        }
+        this.client.setClientId(clientId);
     }
     
     @Override

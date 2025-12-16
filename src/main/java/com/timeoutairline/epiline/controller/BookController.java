@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * BookController - REST API endpoints for Book (Reservation) management
- * Matches the style of AirportController in your project
- */
+
 @RestController
 @RequestMapping("/api/reservations")
 @CrossOrigin(origins = "*")
@@ -29,6 +26,7 @@ public class BookController {
     /**
      * GET /api/reservations - Get all reservations
      */
+
     @GetMapping
     public ResponseEntity<List<Book>> getAllReservations() {
         List<Book> reservations = bookService.getAllReservations();
@@ -38,6 +36,7 @@ public class BookController {
     /**
      * GET /api/reservations/{id} - Get reservation by ID
      */
+
     @GetMapping("/{id}")
     public ResponseEntity<Book> getReservationById(@PathVariable Long id) {
         Optional<Book> reservation = bookService.getReservationById(id);
@@ -48,6 +47,7 @@ public class BookController {
     /**
      * GET /api/reservations/flight/{flightId} - Get reservations by flight ID
      */
+
     @GetMapping("/flight/{flightId}")
     public ResponseEntity<List<Book>> getReservationsByFlightId(@PathVariable Long flightId) {
         List<Book> reservations = bookService.getReservationsByFlightId(flightId);
@@ -57,6 +57,7 @@ public class BookController {
     /**
      * GET /api/reservations/client/{clientId} - Get reservations by client ID
      */
+
     @GetMapping("/client/{clientId}")
     public ResponseEntity<List<Book>> getReservationsByClientId(@PathVariable Long clientId) {
         List<Book> reservations = bookService.getReservationsByClientId(clientId);
@@ -66,6 +67,7 @@ public class BookController {
     /**
      * GET /api/reservations/seat/{typeSeat} - Get reservations by seat type
      */
+
     @GetMapping("/seat/{typeSeat}")
     public ResponseEntity<List<Book>> getReservationsByTypeSeat(@PathVariable String typeSeat) {
         List<Book> reservations = bookService.getReservationsByTypeSeat(typeSeat);
@@ -75,14 +77,15 @@ public class BookController {
     /**
      * POST /api/reservations - Create new reservation
      */
+
     @PostMapping
     public ResponseEntity<?> createReservation(@RequestBody Book reservation) {
         // Validate required fields
-        if (reservation.getFlight().getFlightNum() == null) {
+        if (reservation.getFlightNum() == null) {
             return new ResponseEntity<>("Flight ID is required", HttpStatus.BAD_REQUEST);
         }
 
-        if (reservation.getClient().getClientId() == null) {
+        if (reservation.getClientId() == null) {
             return new ResponseEntity<>("Client ID is required", HttpStatus.BAD_REQUEST);
         }
 
@@ -97,6 +100,7 @@ public class BookController {
     /**
      * PUT /api/reservations/{id} - Update existing reservation
      */
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateReservation(@PathVariable Long id, @RequestBody Book updatedReservation) {
         // Check if reservation exists
@@ -125,6 +129,7 @@ public class BookController {
     /**
      * DELETE /api/reservations/{id} - Delete reservation
      */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteReservation(@PathVariable Long id) {
         if (bookService.deleteReservation(id)) {
