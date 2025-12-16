@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * EmployeeController - REST API endpoints for Employee management
- * Matches the style of AirportController in your project
- */
+
 @RestController
 @RequestMapping("/api/employees")
 @CrossOrigin(origins = "*")
@@ -29,6 +26,7 @@ public class EmployeeController {
     /**
      * GET /api/employees - Get all employees
      */
+    
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
         List<Employee> employees = employeeService.getAllEmployees();
@@ -38,6 +36,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/{id} - Get employee by ID
      */
+
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Optional<Employee> employee = employeeService.getEmployeeById(id);
@@ -48,6 +47,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/empNum/{empNum} - Get employee by employee number
      */
+
     @GetMapping("/empNum/{empNum}")
     public ResponseEntity<Employee> getEmployeeByEmpNum(@PathVariable Integer empNum) {
         Optional<Employee> employee = employeeService.getEmployeeByEmpNum(empNum);
@@ -58,6 +58,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/user/{userId} - Get employee by user ID
      */
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<Employee> getEmployeeByUserId(@PathVariable Long userId) {
         Optional<Employee> employee = employeeService.getEmployeeByUserId(userId);
@@ -68,6 +69,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/profession/{profession} - Get employees by profession
      */
+
     @GetMapping("/profession/{profession}")
     public ResponseEntity<List<Employee>> getEmployeesByProfession(@PathVariable String profession) {
         List<Employee> employees = employeeService.getEmployeesByProfession(profession);
@@ -77,6 +79,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/title/{title} - Get employees by title
      */
+
     @GetMapping("/title/{title}")
     public ResponseEntity<List<Employee>> getEmployeesByTitle(@PathVariable String title) {
         List<Employee> employees = employeeService.getEmployeesByTitle(title);
@@ -86,6 +89,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/search/firstName?name={firstName} - Search employees by first name
      */
+
     @GetMapping("/search/firstName")
     public ResponseEntity<List<Employee>> searchEmployeesByFirstName(@RequestParam String name) {
         List<Employee> employees = employeeService.searchEmployeesByFirstName(name);
@@ -95,6 +99,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/search/lastName?name={lastName} - Search employees by last name
      */
+
     @GetMapping("/search/lastName")
     public ResponseEntity<List<Employee>> searchEmployeesByLastName(@RequestParam String name) {
         List<Employee> employees = employeeService.searchEmployeesByLastName(name);
@@ -104,6 +109,7 @@ public class EmployeeController {
     /**
      * GET /api/employees/search/email?email={email} - Search employee by email
      */
+
     @GetMapping("/search/email")
     public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam String email) {
         Optional<Employee> employee = employeeService.getEmployeeByEmail(email);
@@ -114,6 +120,7 @@ public class EmployeeController {
     /**
      * POST /api/employees - Create new employee
      */
+
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         // Validate employee number
@@ -153,8 +160,10 @@ public class EmployeeController {
     /**
      * PUT /api/employees/{id} - Update existing employee
      */
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        
         // Check if employee exists
         Optional<Employee> existingEmployee = employeeService.getEmployeeById(id);
         if (existingEmployee.isEmpty()) {
@@ -194,6 +203,7 @@ public class EmployeeController {
     /**
      * DELETE /api/employees/{id} - Delete employee
      */
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
         if (employeeService.deleteEmployee(id)) {

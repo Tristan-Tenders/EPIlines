@@ -1,0 +1,28 @@
+Airports CRUD operations tests:
+
+
+GET http://localhost:8080/api/airports (get all)
+GET http://localhost:8080/api/airports/1 (get by ID)
+GET http://localhost:8080/api/airports/country/France
+GET http://localhost:8080/api/airports/city/Paris
+GET http://localhost:8080/api/airports/search?name=Sofia
+
+
+POST - create airport
+POST http://localhost:8080/api/airports
+{
+  "name": "Sofia Airport",
+  "country": "Bulgaria",
+  "city": "Sofia"
+}
+
+PUT - update airport
+PUT http://localhost:8080/api/airports/1
+{
+  "name": "Charles de Gaulle Airport Updated",
+  "country": "France",
+  "city": "Paris"
+}
+
+DELETE - delete airport
+DELETE http://localhost:8080/api/airports/1

@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * AirportController - REST API endpoints for Airport management
- * Matches the style of UserController in your project
- */
+
 @RestController
 @RequestMapping("/api/airports")
 @CrossOrigin(origins = "*")
@@ -29,6 +26,7 @@ public class AirportController {
     /**
      * GET /api/airports - Get all airports
      */
+
     @GetMapping
     public ResponseEntity<List<Airport>> getAllAirports() {
         List<Airport> airports = airportService.getAllAirports();
@@ -38,6 +36,7 @@ public class AirportController {
     /**
      * GET /api/airports/{id} - Get airport by ID
      */
+
     @GetMapping("/{id}")
     public ResponseEntity<Airport> getAirportById(@PathVariable Long id) {
         Optional<Airport> airport = airportService.getAirportById(id);
@@ -46,18 +45,9 @@ public class AirportController {
     }
 
     /**
-     * GET /api/airports/code/{code} - Get airport by IATA code
-     */
-    @GetMapping("/code/{code}")
-    public ResponseEntity<Airport> getAirportByCode(@PathVariable String code) {
-        Optional<Airport> airport = airportService.getAirportByCode(code);
-        return airport.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
      * GET /api/airports/country/{country} - Get airports by country
      */
+
     @GetMapping("/country/{country}")
     public ResponseEntity<List<Airport>> getAirportsByCountry(@PathVariable String country) {
         List<Airport> airports = airportService.getAirportsByCountry(country);
@@ -67,6 +57,7 @@ public class AirportController {
     /**
      * GET /api/airports/city/{city} - Get airports by city
      */
+
     @GetMapping("/city/{city}")
     public ResponseEntity<List<Airport>> getAirportsByCity(@PathVariable String city) {
         List<Airport> airports = airportService.getAirportsByCity(city);
@@ -76,6 +67,7 @@ public class AirportController {
     /**
      * GET /api/airports/search?name={name} - Search airports by name
      */
+
     @GetMapping("/search")
     public ResponseEntity<List<Airport>> searchAirportsByName(@RequestParam String name) {
         List<Airport> airports = airportService.searchAirportsByName(name);
@@ -85,51 +77,64 @@ public class AirportController {
     /**
      * POST /api/airports - Create new airport
      */
-    @PostMapping
-    public ResponseEntity<?> createAirport(@RequestBody Airport airport) {
-        // Validate IATA code length
-        if (airport.getCode() == null || airport.getCode().length() != 3) {
-            return new ResponseEntity<>("Airport code must be exactly 3 characters", HttpStatus.BAD_REQUEST);
-        }
 
-        // Check if code already exists
-        if (airportService.codeExists(airport.getCode())) {
-            return new ResponseEntity<>("Airport with this code already exists", HttpStatus.CONFLICT);
-        }
-
-        Airport createdAirport = airportService.saveAirport(airport);
-        return new ResponseEntity<>(createdAirport, HttpStatus.CREATED);
+@PostMapping
+public ResponseEntity<?> createAirport(@RequestBody Airport airport) {
+    // Check if airport ID already exists
+    if (airport.getAirportId() != null && airportService.getAirportById(airport.getAirportId()).isPresent()) {
+        return new ResponseEntity<>("Airport with this ID already exists", HttpStatus.CONFLICT);
     }
+
+    // Validate required fields
+    if (airport.getName() == null || airport.getName().isEmpty()) {
+        return new ResponseEntity<>("Airport name is required", HttpStatus.BAD_REQUEST);
+    }
+
+    if (airport.getCountry() == null || airport.getCountry().isEmpty()) {
+        return new ResponseEntity<>("Country is required", HttpStatus.BAD_REQUEST);
+    }
+
+    if (airport.getCity() == null || airport.getCity().isEmpty()) {
+        return new ResponseEntity<>("City is required", HttpStatus.BAD_REQUEST);
+    }
+
+    Airport createdAirport = airportService.saveAirport(airport);
+    return new ResponseEntity<>(createdAirport, HttpStatus.CREATED);
+}
 
     /**
      * PUT /api/airports/{id} - Update existing airport
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateAirport(@PathVariable Long id, @RequestBody Airport updatedAirport) {
-        // Check if airport exists
-        Optional<Airport> existingAirport = airportService.getAirportById(id);
-        if (existingAirport.isEmpty()) {
-            return new ResponseEntity<>("Airport not found", HttpStatus.NOT_FOUND);
-        }
-
-        // Validate IATA code length
-        if (updatedAirport.getCode() == null || updatedAirport.getCode().length() != 3) {
-            return new ResponseEntity<>("Airport code must be exactly 3 characters", HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if updating to a code that already exists (for a different airport)
-        Optional<Airport> duplicateAirport = airportService.getAirportByCode(updatedAirport.getCode());
-        if (duplicateAirport.isPresent() && !duplicateAirport.get().getAirportId().equals(id)) {
-            return new ResponseEntity<>("Another airport with this code already exists", HttpStatus.CONFLICT);
-        }
-
-        Airport airport = airportService.updateAirport(id, updatedAirport);
-        return new ResponseEntity<>(airport, HttpStatus.OK);
+    
+@PutMapping("/{id}")
+public ResponseEntity<?> updateAirport(@PathVariable Long id, @RequestBody Airport updatedAirport) {
+    // Check if airport exists
+    Optional<Airport> existingAirport = airportService.getAirportById(id);
+    if (existingAirport.isEmpty()) {
+        return new ResponseEntity<>("Airport not found", HttpStatus.NOT_FOUND);
     }
+
+    // Validate other required fields
+    if (updatedAirport.getName() == null || updatedAirport.getName().isEmpty()) {
+        return new ResponseEntity<>("Airport name is required", HttpStatus.BAD_REQUEST);
+    }
+
+    if (updatedAirport.getCountry() == null || updatedAirport.getCountry().isEmpty()) {
+        return new ResponseEntity<>("Country is required", HttpStatus.BAD_REQUEST);
+    }
+
+    if (updatedAirport.getCity() == null || updatedAirport.getCity().isEmpty()) {
+        return new ResponseEntity<>("City is required", HttpStatus.BAD_REQUEST);
+    }
+
+    Airport airport = airportService.updateAirport(id, updatedAirport);
+    return new ResponseEntity<>(airport, HttpStatus.OK);
+}
 
     /**
      * DELETE /api/airports/{id} - Delete airport
      */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAirport(@PathVariable Long id) {
         if (airportService.deleteAirport(id)) {
