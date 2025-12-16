@@ -174,3 +174,24 @@ INSERT INTO employees (emp_num, profession, title, user_id) VALUES
 (1001, 'Pilot', 'Senior Captain', 1),
 (1002, 'Flight Attendant', 'Chief Flight Attendant', 2),
 (1003, 'Mechanic', 'Aircraft Maintenance Engineer', 3);
+
+-- Create Miles Rewards Table
+CREATE TABLE IF NOT EXISTS miles_rewards (
+    reward_id BIGSERIAL PRIMARY KEY,
+    client_id BIGINT NOT NULL,
+    flight_num BIGINT NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_num) REFERENCES flights(flight_num) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_miles_rewards_client_id ON miles_rewards(client_id);
+CREATE INDEX idx_miles_rewards_flight_num ON miles_rewards(flight_num);
+CREATE INDEX idx_miles_rewards_date ON miles_rewards(date);
+CREATE INDEX idx_miles_rewards_client_flight ON miles_rewards(client_id, flight_num);
+
+-- Insert sample data into miles_rewards table
+INSERT INTO miles_rewards (client_id, flight_num, date) VALUES
+(1, 1, '2025-12-20'),
+(2, 1, '2025-12-20'),
+(3, 1, '2025-12-20');
