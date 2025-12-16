@@ -28,8 +28,8 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
-    //@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<MilesReward> milesRewards = new ArrayList<>();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MilesReward> milesRewards = new ArrayList<>();
 
     // Constructors
     public Client() {
@@ -58,9 +58,9 @@ public class Client {
         return books;
     }
 
-    //public List<MilesReward> getMilesRewards() {
-    //    return milesRewards;
-    //}
+    public List<MilesReward> getMilesRewards() {
+       return milesRewards;
+    }
 
     // Setters
     public void setClientId(Long clientId) {
