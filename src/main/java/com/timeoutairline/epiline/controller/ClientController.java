@@ -6,19 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
-/**
- * ClientController - REST API endpoints for Client management
- * Matches the style of AirportController in your project
- */
 @RestController
 @RequestMapping("/api/clients")
 @CrossOrigin(origins = "*")
 public class ClientController {
-
     private final ClientService clientService;
 
     @Autowired
@@ -102,22 +96,18 @@ public class ClientController {
         if (client.getNumPassport() == null) {
             return new ResponseEntity<>("Passport number is required", HttpStatus.BAD_REQUEST);
         }
-
         // Check if passport already exists
         if (clientService.passportExists(client.getNumPassport())) {
             return new ResponseEntity<>("Client with this passport number already exists", HttpStatus.CONFLICT);
         }
-
-        // Validate user
-        if (client.getUser() == null) {
+        // Validate userId using virtual getter
+        if (client.getUserId() == null) {
             return new ResponseEntity<>("User is required", HttpStatus.BAD_REQUEST);
         }
-
         // Check if user already has a client profile
-        if (clientService.clientExistsByUserId(client.getUser().getId())) {
+        if (clientService.clientExistsByUserId(client.getUserId())) {
             return new ResponseEntity<>("This user already has a client profile", HttpStatus.CONFLICT);
         }
-
         Client createdClient = clientService.saveClient(client);
         return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
     }
@@ -125,37 +115,43 @@ public class ClientController {
     /**
      * PUT /api/clients/{id} - Update existing client
      */
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
-        // Check if client exists
-        Optional<Client> existingClient = clientService.getClientById(id);
-        if (existingClient.isEmpty()) {
-            return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
-        }
+public ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody Client updatedClient) {
 
-        // Validate passport number
-        if (updatedClient.getNumPassport() == null) {
-            return new ResponseEntity<>("Passport number is required", HttpStatus.BAD_REQUEST);
-        }
+    Optional<Client> existingClient = clientService.getClientById(id);
+    if (existingClient.isEmpty()) {
+        return new ResponseEntity<>("Client not found", HttpStatus.NOT_FOUND);
+    }
 
-        // Check if updating to a passport that already exists (for a different client)
+    if (updatedClient.getNumPassport() == null) {
+        return new ResponseEntity<>("Passport number is required", HttpStatus.BAD_REQUEST);
+    }
+
+    Long currentPassport = existingClient.get().getNumPassport();
+    if (!currentPassport.equals(updatedClient.getNumPassport())) {
+
         Optional<Client> duplicateClient = clientService.getClientByPassport(updatedClient.getNumPassport());
         if (duplicateClient.isPresent() && !duplicateClient.get().getClientId().equals(id)) {
             return new ResponseEntity<>("Another client with this passport number already exists", HttpStatus.CONFLICT);
         }
-
-        // Validate user
-        if (updatedClient.getUser() == null) {
-            return new ResponseEntity<>("User is required", HttpStatus.BAD_REQUEST);
-        }
-
-        Client client = clientService.updateClient(id, updatedClient);
-        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
+    if (updatedClient.getUserId() == null) {
+        return new ResponseEntity<>("User is required", HttpStatus.BAD_REQUEST);
+    }
+
+    if (!existingClient.get().getUserId().equals(updatedClient.getUserId())) {
+        return new ResponseEntity<>("Changing the linked user is not allowed", HttpStatus.BAD_REQUEST);
+    }
+
+    Client updated = clientService.updateClient(id, updatedClient);
+    return new ResponseEntity<>(updated, HttpStatus.OK);
+}
     /**
      * DELETE /api/clients/{id} - Delete client
      */
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable Long id) {
         if (clientService.deleteClient(id)) {

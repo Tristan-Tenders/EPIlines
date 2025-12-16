@@ -57,3 +57,64 @@ PUT http://localhost:8080/api/reservations/4
 DELETE - delete reservation
 DELETE http://localhost:8080/api/reservations/4
 
+
+Clients CRUD operations tests
+
+GET
+GET http://localhost:8080/api/clients get all clients
+GET http://localhost:8080/api/clients/1 get client by ID
+GET http://localhost:8080/api/clients/passport/123456789 get client by passportNum
+GET http://localhost:8080/api/clients/user/1 get client by userId (they share same Id)
+GET http://localhost:8080/api/clients/search/firstName?name=John get user by fname
+GET http://localhost:8080/api/clients/search/lastName?name=Smith get user by lname
+!!Basically - client is the connection entity between Reservations and Miles rewards of system users, so u can access the same get methods for this entity as for user.
+
+POST - add passport number to already existing users
+POST http://localhost:8080/api/clients
+{
+  "numPassport": 888888888,
+  "userId": 4
+}
+
+
+PUT
+PUT - http://localhost:8080/api/clients/1 - update passpo of a clients by Id
+{
+  "numPassport": 999999999,
+  "userId": 1
+}
+
+DETELE 
+
+
+Employee
+
+GET
+GET http://localhost:8080/api/employees get all employees
+GET http://localhost:8080/api/employees/3 get employee by userId
+GET http://localhost:8080/api/employees/empNum/1004 get employee by employeeNum
+GET http://localhost:8080/api/employees/profession/Pilot get employee by profession
+
+POST 
+POST - http://localhost:8080/api/employees
+{
+  "employeeId": 4,
+  "empNum": 1004,
+  "profession": "PILOT",
+  "title": "Captain",
+  "userId": 4
+}
+Creates an Employee of empty User Entity (which is not an employee yet)
+
+PUT
+PUT - http://localhost:8080/api/employees/4 update Employees properties by Id 
+{
+  "employeeId": 4,
+  "empNum": 1004,
+  "profession": "Not Pilot",
+  "title": "Captain",
+  "userId": 4
+}
+
+DELETE
+DELETE http://localhost:8080/api/employees/4 delete employee by empNum

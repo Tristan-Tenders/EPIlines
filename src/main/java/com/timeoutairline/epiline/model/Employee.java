@@ -1,11 +1,8 @@
 package com.timeoutairline.epiline.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-/**
- * Employee Entity - Represents employees table in database
- * Manual getters/setters (matching your User entity style)
- */
 @Entity
 @Table(name = "employees")
 public class Employee {
@@ -78,6 +75,21 @@ public class Employee {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @JsonProperty("userId")
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+
+    @JsonProperty("userId")
+    public void setUserId(Long userId) {
+        if (userId != null) {
+            if (this.user == null) {
+                this.user = new User();
+            }
+            this.user.setId(userId);
+        }
     }
 
     @Override
