@@ -3,7 +3,9 @@ package com.timeoutairline.epiline.service;
 import com.timeoutairline.epiline.model.Airport;
 import com.timeoutairline.epiline.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,8 +76,11 @@ public class AirportService {
     public Airport saveAirport(Airport airport) {
         if (airport.getAirportId() != null) {
             return airportRepository.save(airport);
-        }
-        return null;
+    }
+        throw new ResponseStatusException(
+    HttpStatus.BAD_REQUEST, "Airport ID must be null when creating"
+);
+
     }
 
     /**
