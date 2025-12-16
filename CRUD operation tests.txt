@@ -1,3 +1,211 @@
+GET    http://localhost:8080/api/users
+GET    http://localhost:8080/api/users/1
+
+POST   http://localhost:8080/api/users
+Body:
+{
+  "firstname": "Alice",
+  "lastname": "Johnson",
+  "address": "789 Elm St, Nice",
+  "email": "alice.johnson@example.com",
+  "phone": "+33666777888",
+  "birthdate": "1995-07-20"
+}
+
+PUT    http://localhost:8080/api/users/4
+Body:
+{
+  "firstname": "Alice",
+  "lastname": "Johnson-Smith",
+  "address": "789 Elm St, Nice",
+  "email": "alice.johnson@example.com",
+  "phone": "+33666777888",
+  "birthdate": "1995-07-20"
+}
+
+DELETE http://localhost:8080/api/users/4
+
+
+Clients:
+
+GET    http://localhost:8080/api/clients
+GET    http://localhost:8080/api/clients/1
+GET    http://localhost:8080/api/clients/passport/123456789
+GET    http://localhost:8080/api/clients/user/1
+GET    http://localhost:8080/api/clients/search/firstName?name=John
+GET    http://localhost:8080/api/clients/search/lastName?name=Smith
+GET    http://localhost:8080/api/clients/search/email?email=john.doe@example.com
+
+POST   http://localhost:8080/api/clients
+Body:
+{
+  "numPassport": 888888888,
+  "userId": 4
+}
+
+PUT    http://localhost:8080/api/clients/1
+Body:
+{
+  "numPassport": 999999999,
+  "userId": 1
+}
+
+DELETE http://localhost:8080/api/clients/4
+
+
+Employees:
+GET    http://localhost:8080/api/employees
+GET    http://localhost:8080/api/employees/1
+GET    http://localhost:8080/api/employees/empNum/1001
+GET    http://localhost:8080/api/employees/user/1
+GET    http://localhost:8080/api/employees/profession/Pilot
+GET    http://localhost:8080/api/employees/title/Captain
+GET    http://localhost:8080/api/employees/search/firstName?name=John
+GET    http://localhost:8080/api/employees/search/lastName?name=Doe
+GET    http://localhost:8080/api/employees/search/email?email=john.doe@example.com
+
+POST   http://localhost:8080/api/employees
+Body:
+{
+  "empNum": 1004,
+  "profession": "PILOT",
+  "title": "Captain",
+  "userId": 4
+}
+
+PUT    http://localhost:8080/api/employees/4
+Body:
+{
+  "employeeId": 4,
+  "empNum": 1004,
+  "profession": "First Officer",
+  "title": "Senior First Officer",
+  "userId": 4
+}
+
+DELETE http://localhost:8080/api/employees/4
+
+Planes:
+GET    http://localhost:8080/api/planes
+GET    http://localhost:8080/api/planes/1
+GET    http://localhost:8080/api/planes/brand/Boeing
+GET    http://localhost:8080/api/planes/model/A320
+GET    http://localhost:8080/api/planes/year/2017
+
+POST   http://localhost:8080/api/planes
+Body:
+{
+  "brand": "Boeing",
+  "model": "777-300ER",
+  "manYear": 2020
+}
+
+PUT    http://localhost:8080/api/planes/6
+Body:
+{
+  "planeId": 6,
+  "brand": "Boeing",
+  "model": "777-300ER",
+  "manYear": 2021
+}
+
+DELETE http://localhost:8080/api/planes/6
+
+Flights:
+GET    http://localhost:8080/api/flights
+GET    http://localhost:8080/api/flights/1
+GET    http://localhost:8080/api/flights/departure/Paris
+GET    http://localhost:8080/api/flights/arrival/New York
+GET    http://localhost:8080/api/flights/route?from=Paris&to=New York
+GET    http://localhost:8080/api/flights/airport/departure/1
+GET    http://localhost:8080/api/flights/airport/arrival/2
+GET    http://localhost:8080/api/flights/plane/1
+GET    http://localhost:8080/api/flights/status/SCHEDULED
+GET    http://localhost:8080/api/flights/upcoming
+GET    http://localhost:8080/api/flights/available
+
+POST   http://localhost:8080/api/flights
+Body:
+{
+  "depCity": "London",
+  "arrCity": "Tokyo",
+  "depTime": "2025-12-25T09:00:00",
+  "arrTime": "2025-12-26T05:00:00",
+  "depAirportId": 10,
+  "arrAirportId": 21,
+  "planeId": 2,
+  "totalSeats": 300,
+  "availableSeats": 300,
+  "fcSeatPrice": 5000.00,
+  "prSeatPrice": 3000.00,
+  "bsSeatPrice": 2000.00,
+  "ecSeatPrice": 800.00,
+  "status": "SCHEDULED"
+}
+
+PUT    http://localhost:8080/api/flights/2
+Body:
+{
+  "flightNum": 2,
+  "depCity": "London",
+  "arrCity": "Tokyo",
+  "depTime": "2025-12-25T10:00:00",
+  "arrTime": "2025-12-26T06:00:00",
+  "depAirportId": 10,
+  "arrAirportId": 21,
+  "planeId": 2,
+  "totalSeats": 300,
+  "availableSeats": 295,
+  "fcSeatPrice": 5000.00,
+  "prSeatPrice": 3000.00,
+  "bsSeatPrice": 2000.00,
+  "ecSeatPrice": 800.00,
+  "status": "SCHEDULED"
+}
+
+PATCH  http://localhost:8080/api/flights/1/status?status=BOARDING
+
+POST   http://localhost:8080/api/flights/1/book
+POST   http://localhost:8080/api/flights/1/cancel-seat
+
+DELETE http://localhost:8080/api/flights/2
+
+
+Reservations:
+GET    http://localhost:8080/api/reservations
+GET    http://localhost:8080/api/reservations/1
+GET    http://localhost:8080/api/reservations/flight/1
+GET    http://localhost:8080/api/reservations/client/1
+GET    http://localhost:8080/api/reservations/seat/BUSINESS
+
+POST   http://localhost:8080/api/reservations
+Body:
+{
+  "flightNum": 1,
+  "clientId": 1,
+  "typeSeat": "ECONOMY"
+}
+
+PUT    http://localhost:8080/api/reservations/4
+Body:
+{
+  "reservationId": 4,
+  "typeSeat": "FIRST",
+  "clientId": 1,
+  "flightNum": 1
+}
+
+DELETE http://localhost:8080/api/reservations/4
+
+
+
+
+
+
+
+
+
+
 Airports CRUD operations tests:
 
 
@@ -121,30 +329,33 @@ DELETE
 DELETE http://localhost:8080/api/employees/4 delete employee by empNum
 
 
-MilesRewards
+Miles rewards
 
-GET
-GET http://localhost:8080/api/milesrewards/client/1 get milesrewards by clients Id
-GET http://localhost:8080/api/milesrewards get all the miles rewards accross all clients
-GET http://localhost:8080/api/milesrewards/flight/1 get all milesrewards for 1 particular flight
-Also we can search MilesRewards scored by date of flight
+GET    http://localhost:8080/api/milesrewards
+GET    http://localhost:8080/api/milesrewards/1
+GET    http://localhost:8080/api/milesrewards/client/1
+GET    http://localhost:8080/api/milesrewards/flight/1
+GET    http://localhost:8080/api/milesrewards/date/2025-12-20
+GET    http://localhost:8080/api/milesrewards/search/client-flight?clientId=1&flightNum=1
+GET    http://localhost:8080/api/milesrewards/search/client-date?clientId=1&date=2025-12-20
 
-POST
-POST http://localhost:8080/api/milesrewards create a milereward by clientId and FlightNum, also a date required
+
+
+
+POST   http://localhost:8080/api/milesrewards
+Body:
 {
   "clientId": 1,
   "flightNum": 1,
   "date": "2025-12-16"
 }
 
-PUT
-PUT http://localhost:8080/api/milesrewards/4 change milereward by its Id
+PUT    http://localhost:8080/api/milesrewards/4
+Body:
 {
   "clientId": 1,
   "flightNum": 1,
   "date": "2025-12-12"
 }
 
-DELETE
-DELETE http://localhost:8080/api/milesrewards/4 delete milereward by its Id
-
+DELETE http://localhost:8080/api/milesrewards/4

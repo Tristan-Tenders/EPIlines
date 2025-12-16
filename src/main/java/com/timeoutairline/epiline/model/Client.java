@@ -34,10 +34,16 @@ public class Client {
     private User user;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Book> books = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<MilesReward> milesRewards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<DiscountCode> discountCodes = new ArrayList<>();
 
     // Constructors
     public Client() {
@@ -67,7 +73,11 @@ public class Client {
     }
 
     public List<MilesReward> getMilesRewards() {
-       return milesRewards;
+        return milesRewards;
+    }
+
+    public List<DiscountCode> getDiscountCodes() {
+        return discountCodes;
     }
 
     // Setters
@@ -91,8 +101,11 @@ public class Client {
         this.milesRewards = milesRewards;
     }
 
-    // Add these to Client.java
+    public void setDiscountCodes(List<DiscountCode> discountCodes) {
+        this.discountCodes = discountCodes;
+    }
 
+    // Virtual getters/setters for JSON serialization
     @JsonProperty("userId")
     public Long getUserId() {
         return user != null ? user.getId() : null;
@@ -116,6 +129,7 @@ public class Client {
                 ", user=" + user +
                 ", books=" + books.size() +
                 ", milesRewards=" + milesRewards.size() +
+                ", discountCodes=" + discountCodes.size() +
                 '}';
     }
 }

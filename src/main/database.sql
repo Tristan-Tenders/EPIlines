@@ -195,3 +195,27 @@ INSERT INTO miles_rewards (client_id, flight_num, date) VALUES
 (1, 1, '2025-12-20'),
 (2, 1, '2025-12-20'),
 (3, 1, '2025-12-20');
+
+CREATE TABLE IF NOT EXISTS discount_codes (
+    discount_id BIGSERIAL PRIMARY KEY,
+    client_id BIGINT NOT NULL,
+    code VARCHAR(10) UNIQUE NOT NULL,
+    year INTEGER NOT NULL,
+    generated_at TIMESTAMP NOT NULL,
+    is_used BOOLEAN NOT NULL DEFAULT FALSE,
+    used_at TIMESTAMP,
+    discount_percentage FLOAT NOT NULL DEFAULT 10.0,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE CASCADE
+);
+
+
+CREATE INDEX idx_discount_codes_client_id ON discount_codes(client_id);
+CREATE INDEX idx_discount_codes_code ON discount_codes(code);
+CREATE INDEX idx_discount_codes_year ON discount_codes(year);
+CREATE INDEX idx_discount_codes_client_year ON discount_codes(client_id, year);
+CREATE INDEX idx_discount_codes_is_used ON discount_codes(is_used);
+
+
+COMMENT ON TABLE discount_codes IS 'Stores discount codes generated when clients complete 3 flights in a calendar year';
+COMMENT ON COLUMN discount_codes.code IS '10-character alphanumeric discount code';
+COMMENT ON COLUMN discount_codes.discount_percentage IS 'Percentage discount (default 10%)';

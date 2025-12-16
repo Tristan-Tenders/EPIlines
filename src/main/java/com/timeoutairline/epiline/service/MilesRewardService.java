@@ -1,6 +1,7 @@
 package com.timeoutairline.epiline.service;
 
 import com.timeoutairline.epiline.model.Client;
+import com.timeoutairline.epiline.model.DiscountCode;
 import com.timeoutairline.epiline.model.Flight;
 import com.timeoutairline.epiline.model.MilesReward;
 import com.timeoutairline.epiline.repository.ClientRepository;
@@ -18,14 +19,17 @@ public class MilesRewardService {
     private final MilesRewardRepository milesRewardRepository;
     private final ClientRepository clientRepository;
     private final FlightRepository flightRepository;
+    private final DiscountCodeService discountCodeService;
 
     @Autowired
     public MilesRewardService(MilesRewardRepository milesRewardRepository,
                               ClientRepository clientRepository,
-                              FlightRepository flightRepository) {
+                              FlightRepository flightRepository,
+                              DiscountCodeService discountCodeService) {
         this.milesRewardRepository = milesRewardRepository;
         this.clientRepository = clientRepository;
         this.flightRepository = flightRepository;
+        this.discountCodeService = discountCodeService;
     }
 
     public List<MilesReward> getAllMilesRewards() {
@@ -71,7 +75,20 @@ public class MilesRewardService {
                 .orElseThrow(() -> new RuntimeException("Flight not found: " + milesReward.getFlightNum()));
         milesReward.setFlight(realFlight);
 
-        return milesRewardRepository.save(milesReward);
+        // Save the miles reward
+        MilesReward savedReward = milesRewardRepository.save(milesReward);
+
+        // Check if client qualifies for discount code and generate if eligible
+        Integer year = milesReward.getDate().getYear();
+        DiscountCode generatedCode = discountCodeService.checkAndGenerateDiscountCode(
+                milesReward.getClientId(), year);
+
+        if (generatedCode != null) {
+            System.out.println("🎉 Discount code generated for client " + milesReward.getClientId() +
+                    ": " + generatedCode.getCode());
+        }
+
+        return savedReward;
     }
 
     public MilesReward updateMilesReward(Long rewardId, MilesReward updatedMilesReward) {
