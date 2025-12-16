@@ -153,3 +153,24 @@ INSERT INTO reservations (flight_num, client_id, type_seat) VALUES
 (1, 1, 'ECONOMY'),
 (1, 2, 'BUSINESS'),
 (1, 3, 'FIRST');
+
+-- Create Employees Table
+CREATE TABLE IF NOT EXISTS employees (
+    employee_id BIGSERIAL PRIMARY KEY,
+    emp_num INTEGER UNIQUE NOT NULL,
+    profession VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_employees_emp_num ON employees(emp_num);
+CREATE INDEX idx_employees_user_id ON employees(user_id);
+CREATE INDEX idx_employees_profession ON employees(profession);
+CREATE INDEX idx_employees_title ON employees(title);
+
+-- Insert sample data into employees table
+INSERT INTO employees (emp_num, profession, title, user_id) VALUES
+(1001, 'Pilot', 'Senior Captain', 1),
+(1002, 'Flight Attendant', 'Chief Flight Attendant', 2),
+(1003, 'Mechanic', 'Aircraft Maintenance Engineer', 3);
