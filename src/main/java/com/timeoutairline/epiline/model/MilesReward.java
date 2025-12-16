@@ -1,14 +1,11 @@
 package com.timeoutairline.epiline.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import java.time.LocalDate;
 
-/**
- * MilesReward Entity - Represents miles_rewards table in database
- * Manual getters/setters (matching your Client entity style)
- */
+
 @Entity
 @Table(name = "miles_rewards")
 public class MilesReward {
@@ -84,12 +81,32 @@ public class MilesReward {
         this.date = date;
     }
 
+    @JsonProperty("clientId")
+    public void setClientId(Long clientId) {
+        if (clientId != null) {
+            if (this.client == null) {
+                this.client = new Client();
+            }
+            this.client.setClientId(clientId);
+        }
+    }
+
+    @JsonProperty("flightNum")
+    public void setFlightNum(Long flightNum) {
+        if (flightNum != null) {
+            if (this.flight == null) {
+                this.flight = new Flight();
+            }
+            this.flight.setFlightNum(flightNum);
+        }
+    }
+
     @Override
     public String toString() {
         return "MilesReward{" +
                 "rewardId=" + rewardId +
-                ", client=" + client.getClientId() +
-                ", flight=" + flight.getFlightNum() +
+                ", client=" + (client != null ? client.getClientId() : "null") +
+                ", flight=" + (flight != null ? flight.getFlightNum() : "null") +
                 ", date=" + date +
                 '}';
     }

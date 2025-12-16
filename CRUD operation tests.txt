@@ -85,6 +85,7 @@ PUT - http://localhost:8080/api/clients/1 - update passpo of a clients by Id
 }
 
 DETELE 
+DELETE http://localhost:8080/api/clients/1 delete client by Id
 
 
 Employee
@@ -118,3 +119,32 @@ PUT - http://localhost:8080/api/employees/4 update Employees properties by Id
 
 DELETE
 DELETE http://localhost:8080/api/employees/4 delete employee by empNum
+
+
+MilesRewards
+
+GET
+GET http://localhost:8080/api/milesrewards/client/1 get milesrewards by clients Id
+GET http://localhost:8080/api/milesrewards get all the miles rewards accross all clients
+GET http://localhost:8080/api/milesrewards/flight/1 get all milesrewards for 1 particular flight
+Also we can search MilesRewards scored by date of flight
+
+POST
+POST http://localhost:8080/api/milesrewards create a milereward by clientId and FlightNum, also a date required
+{
+  "clientId": 1,
+  "flightNum": 1,
+  "date": "2025-12-16"
+}
+
+PUT
+PUT http://localhost:8080/api/milesrewards/4 change milereward by its Id
+{
+  "clientId": 1,
+  "flightNum": 1,
+  "date": "2025-12-12"
+}
+
+DELETE
+DELETE http://localhost:8080/api/milesrewards/4 delete milereward by its Id
+
