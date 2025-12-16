@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * PlaneController - REST API endpoints for Plane management
- * Matches the style of UserController in your project
- */
+
 @RestController
 @RequestMapping("/api/planes")
 @CrossOrigin(origins = "*")

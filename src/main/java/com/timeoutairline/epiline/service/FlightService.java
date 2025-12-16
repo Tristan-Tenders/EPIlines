@@ -9,10 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * FlightService - Business logic layer for Flight operations
- * Matches the style of UserService in your project
- */
+
 @Service
 public class FlightService {
 

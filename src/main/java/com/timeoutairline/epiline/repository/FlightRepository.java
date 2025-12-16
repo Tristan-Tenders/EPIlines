@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * FlightRepository - Data access layer for Flight entity
- * Spring Data JPA automatically implements these methods
- */
+
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 

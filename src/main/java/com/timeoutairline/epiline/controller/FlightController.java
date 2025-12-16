@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * FlightController - REST API endpoints for Flight management
- * Matches the style of UserController in your project
- */
+
 @RestController
 @RequestMapping("/api/flights")
 @CrossOrigin(origins = "*")

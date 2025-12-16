@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * PlaneService - Business logic layer for Plane operations
- * Matches the style of UserService in your project
- */
+
 @Service
 public class PlaneService {
 

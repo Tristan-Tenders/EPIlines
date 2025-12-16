@@ -7,10 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * PlaneRepository - Data access layer for Plane entity
- * Spring Data JPA automatically implements these methods
- */
 @Repository
 public interface PlaneRepository extends JpaRepository<Plane, Long> {
 
