@@ -3,15 +3,14 @@ package com.timeoutairline.epiline.service;
 import com.timeoutairline.epiline.model.Airport;
 import com.timeoutairline.epiline.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * AirportService - Business logic layer for Airport operations
- * Matches the style of UserService in your project
- */
+
 @Service
 public class AirportService {
 
@@ -25,6 +24,7 @@ public class AirportService {
     /**
      * Get all airports
      */
+
     public List<Airport> getAllAirports() {
         return airportRepository.findAll();
     }
@@ -32,20 +32,15 @@ public class AirportService {
     /**
      * Get airport by ID
      */
+
     public Optional<Airport> getAirportById(Long airportId) {
         return airportRepository.findById(airportId);
     }
 
     /**
-     * Get airport by IATA code
-     */
-    public Optional<Airport> getAirportByCode(String code) {
-        return airportRepository.findByCode(code.toUpperCase());
-    }
-
-    /**
      * Get airports by country
      */
+
     public List<Airport> getAirportsByCountry(String country) {
         return airportRepository.findByCountry(country);
     }
@@ -53,6 +48,7 @@ public class AirportService {
     /**
      * Get airports by city
      */
+
     public List<Airport> getAirportsByCity(String city) {
         return airportRepository.findByCity(city);
     }
@@ -60,6 +56,7 @@ public class AirportService {
     /**
      * Search airports by name
      */
+
     public List<Airport> searchAirportsByName(String name) {
         return airportRepository.findByNameContainingIgnoreCase(name);
     }
@@ -67,6 +64,7 @@ public class AirportService {
     /**
      * Get airports by country and city
      */
+
     public List<Airport> getAirportsByCountryAndCity(String country, String city) {
         return airportRepository.findByCountryAndCity(country, city);
     }
@@ -74,25 +72,26 @@ public class AirportService {
     /**
      * Save a new airport
      */
+
     public Airport saveAirport(Airport airport) {
-        // Convert code to uppercase
-        if (airport.getCode() != null) {
-            airport.setCode(airport.getCode().toUpperCase());
-        }
-        return airportRepository.save(airport);
+        if (airport.getAirportId() != null) {
+            return airportRepository.save(airport);
+    }
+        throw new ResponseStatusException(
+    HttpStatus.BAD_REQUEST, "Airport ID must be null when creating"
+);
+
     }
 
     /**
      * Update existing airport
      * Returns null if airport doesn't exist
      */
+
     public Airport updateAirport(Long airportId, Airport updatedAirport) {
         if (airportRepository.existsById(airportId)) {
             updatedAirport.setAirportId(airportId);
-            // Convert code to uppercase
-            if (updatedAirport.getCode() != null) {
-                updatedAirport.setCode(updatedAirport.getCode().toUpperCase());
-            }
+
             return airportRepository.save(updatedAirport);
         }
         return null;
@@ -110,10 +109,4 @@ public class AirportService {
         return false;
     }
 
-    /**
-     * Check if airport code exists
-     */
-    public boolean codeExists(String code) {
-        return airportRepository.existsByCode(code.toUpperCase());
-    }
 }

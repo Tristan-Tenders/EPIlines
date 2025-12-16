@@ -116,3 +116,82 @@ CREATE TABLE IF NOT EXISTS flights (
 
 INSERT INTO flights (dep_city, arr_city, dep_time, arr_time, dep_airport_id, arr_airport_id, plane_id, total_seats, available_seats, first_class_price, premium_price, business_price, economy_price, status)
 VALUES ('Paris', 'New York', '2025-12-20 10:00:00', '2025-12-20 13:30:00', 1, 2, 1, 250, 250, 3500.00, 2200.00, 1500.00, 450.00, 'SCHEDULED');
+
+-- Create Clients Table
+CREATE TABLE IF NOT EXISTS clients (
+    client_id BIGSERIAL PRIMARY KEY,
+    num_passport BIGINT UNIQUE NOT NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_clients_user_id ON clients(user_id);
+CREATE INDEX idx_clients_num_passport ON clients(num_passport);
+
+-- Create Reservations (Book) Table
+CREATE TABLE IF NOT EXISTS reservations (
+    reservation_id BIGSERIAL PRIMARY KEY,
+    flight_num BIGINT NOT NULL,
+    client_id BIGINT NOT NULL,
+    type_seat VARCHAR(50) NOT NULL,
+    FOREIGN KEY (flight_num) REFERENCES flights(flight_num) ON DELETE CASCADE,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_reservations_flight_num ON reservations(flight_num);
+CREATE INDEX idx_reservations_client_id ON reservations(client_id);
+CREATE INDEX idx_reservations_type_seat ON reservations(type_seat);
+
+-- Insert sample data into clients table
+INSERT INTO clients (num_passport, user_id) VALUES
+(123456789, 1),
+(987654321, 2),
+(555123456, 3);
+
+-- Insert sample data into reservations table
+INSERT INTO reservations (flight_num, client_id, type_seat) VALUES
+(1, 1, 'ECONOMY'),
+(1, 2, 'BUSINESS'),
+(1, 3, 'FIRST');
+
+-- Create Employees Table
+CREATE TABLE IF NOT EXISTS employees (
+    employee_id BIGSERIAL PRIMARY KEY,
+    emp_num INTEGER UNIQUE NOT NULL,
+    profession VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    user_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_employees_emp_num ON employees(emp_num);
+CREATE INDEX idx_employees_user_id ON employees(user_id);
+CREATE INDEX idx_employees_profession ON employees(profession);
+CREATE INDEX idx_employees_title ON employees(title);
+
+-- Insert sample data into employees table
+INSERT INTO employees (emp_num, profession, title, user_id) VALUES
+(1001, 'Pilot', 'Senior Captain', 1),
+(1002, 'Flight Attendant', 'Chief Flight Attendant', 2),
+(1003, 'Mechanic', 'Aircraft Maintenance Engineer', 3);
+
+-- Create Miles Rewards Table
+CREATE TABLE IF NOT EXISTS miles_rewards (
+    reward_id BIGSERIAL PRIMARY KEY,
+    client_id BIGINT NOT NULL,
+    flight_num BIGINT NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE CASCADE,
+    FOREIGN KEY (flight_num) REFERENCES flights(flight_num) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_miles_rewards_client_id ON miles_rewards(client_id);
+CREATE INDEX idx_miles_rewards_flight_num ON miles_rewards(flight_num);
+CREATE INDEX idx_miles_rewards_date ON miles_rewards(date);
+CREATE INDEX idx_miles_rewards_client_flight ON miles_rewards(client_id, flight_num);
+
+-- Insert sample data into miles_rewards table
+INSERT INTO miles_rewards (client_id, flight_num, date) VALUES
+(1, 1, '2025-12-20'),
+(2, 1, '2025-12-20'),
+(3, 1, '2025-12-20');

@@ -1,0 +1,150 @@
+Airports CRUD operations tests:
+
+
+GET http://localhost:8080/api/airports (get all)
+GET http://localhost:8080/api/airports/1 (get by ID)
+GET http://localhost:8080/api/airports/country/France
+GET http://localhost:8080/api/airports/city/Paris
+GET http://localhost:8080/api/airports/search?name=Sofia
+
+
+POST - create airport
+POST http://localhost:8080/api/airports
+{
+  "name": "Sofia Airport",
+  "country": "Bulgaria",
+  "city": "Sofia"
+}
+
+PUT - update airport
+PUT http://localhost:8080/api/airports/1
+{
+        "airportId": 26,
+        "name": "Sofia Airport",
+        "country": "Not Bulgaria",
+        "city": "Sofia"
+}
+
+DELETE - delete airport
+DELETE http://localhost:8080/api/airports/1
+
+Book (Reservation) CRUD operations
+
+GET
+GET http://localhost:8080/api/reservations (get all)
+GET http://localhost:8080/api/reservations/1 (get by ID)
+GET http://localhost:8080/api/reservations/flight/1 get by flight ID
+GET http://localhost:8080/api/reservations/client/2 get by clients ID
+GET http://localhost:8080/api/reservations/seat/BUSINESS get reserved seats by type
+
+POST - create and save reservation
+POST http://localhost:8080/api/reservations
+{
+  "flightNum": 1,
+  "clientId": 1,
+  "typeSeat": "ECONOMY"
+}
+
+PUT - update reservation
+PUT http://localhost:8080/api/reservations/4
+{
+    "reservationId": 4,
+    "typeSeat": "FIRST",
+    "clientId": 1,
+    "flightNum": 1
+}
+
+DELETE - delete reservation
+DELETE http://localhost:8080/api/reservations/4
+
+
+Clients CRUD operations tests
+
+GET
+GET http://localhost:8080/api/clients get all clients
+GET http://localhost:8080/api/clients/1 get client by ID
+GET http://localhost:8080/api/clients/passport/123456789 get client by passportNum
+GET http://localhost:8080/api/clients/user/1 get client by userId (they share same Id)
+GET http://localhost:8080/api/clients/search/firstName?name=John get user by fname
+GET http://localhost:8080/api/clients/search/lastName?name=Smith get user by lname
+!!Basically - client is the connection entity between Reservations and Miles rewards of system users, so u can access the same get methods for this entity as for user.
+
+POST - add passport number to already existing users
+POST http://localhost:8080/api/clients
+{
+  "numPassport": 888888888,
+  "userId": 4
+}
+
+
+PUT
+PUT - http://localhost:8080/api/clients/1 - update passpo of a clients by Id
+{
+  "numPassport": 999999999,
+  "userId": 1
+}
+
+DETELE 
+DELETE http://localhost:8080/api/clients/1 delete client by Id
+
+
+Employee
+
+GET
+GET http://localhost:8080/api/employees get all employees
+GET http://localhost:8080/api/employees/3 get employee by userId
+GET http://localhost:8080/api/employees/empNum/1004 get employee by employeeNum
+GET http://localhost:8080/api/employees/profession/Pilot get employee by profession
+
+POST 
+POST - http://localhost:8080/api/employees
+{
+  "employeeId": 4,
+  "empNum": 1004,
+  "profession": "PILOT",
+  "title": "Captain",
+  "userId": 4
+}
+Creates an Employee of empty User Entity (which is not an employee yet)
+
+PUT
+PUT - http://localhost:8080/api/employees/4 update Employees properties by Id 
+{
+  "employeeId": 4,
+  "empNum": 1004,
+  "profession": "Not Pilot",
+  "title": "Captain",
+  "userId": 4
+}
+
+DELETE
+DELETE http://localhost:8080/api/employees/4 delete employee by empNum
+
+
+MilesRewards
+
+GET
+GET http://localhost:8080/api/milesrewards/client/1 get milesrewards by clients Id
+GET http://localhost:8080/api/milesrewards get all the miles rewards accross all clients
+GET http://localhost:8080/api/milesrewards/flight/1 get all milesrewards for 1 particular flight
+Also we can search MilesRewards scored by date of flight
+
+POST
+POST http://localhost:8080/api/milesrewards create a milereward by clientId and FlightNum, also a date required
+{
+  "clientId": 1,
+  "flightNum": 1,
+  "date": "2025-12-16"
+}
+
+PUT
+PUT http://localhost:8080/api/milesrewards/4 change milereward by its Id
+{
+  "clientId": 1,
+  "flightNum": 1,
+  "date": "2025-12-12"
+}
+
+DELETE
+DELETE http://localhost:8080/api/milesrewards/4 delete milereward by its Id
+
