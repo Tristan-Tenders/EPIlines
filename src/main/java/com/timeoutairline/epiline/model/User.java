@@ -3,9 +3,7 @@ package com.timeoutairline.epiline.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/**
- * User Entity - Manual getters/setters (no Lombok)
- */
+
 @Entity
 @Table(name = "users")
 public class User {

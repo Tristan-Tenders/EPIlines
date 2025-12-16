@@ -3,10 +3,7 @@ package com.timeoutairline.epiline.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Flight Entity - Represents flights table in database
- * Manual getters/setters (matching your User entity style)
- */
+
 @Entity
 @Table(name = "flights")
 public class Flight {

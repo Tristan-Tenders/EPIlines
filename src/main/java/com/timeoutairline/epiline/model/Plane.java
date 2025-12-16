@@ -2,10 +2,7 @@ package com.timeoutairline.epiline.model;
 
 import jakarta.persistence.*;
 
-/**
- * Plane Entity - Represents planes table in database
- * Manual getters/setters (matching your User entity style)
- */
+
 @Entity
 @Table(name = "planes")
 public class Plane {

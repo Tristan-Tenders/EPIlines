@@ -2,10 +2,7 @@ package com.timeoutairline.epiline.model;
 
 import jakarta.persistence.*;
 
-/**
- * Airport Entity - Represents airports table in database
- * Manual getters/setters (matching your User entity style)
- */
+
 @Entity
 @Table(name = "airports")
 public class Airport {
