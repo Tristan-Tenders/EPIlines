@@ -74,13 +74,7 @@ public class AirportService {
      */
 
     public Airport saveAirport(Airport airport) {
-        if (airport.getAirportId() != null) {
-            return airportRepository.save(airport);
-    }
-        throw new ResponseStatusException(
-    HttpStatus.BAD_REQUEST, "Airport ID must be null when creating"
-);
-
+        return airportRepository.save(airport);
     }
 
     /**

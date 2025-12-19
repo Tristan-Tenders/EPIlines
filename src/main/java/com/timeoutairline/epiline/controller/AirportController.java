@@ -78,34 +78,37 @@ public class AirportController {
      * POST /api/airports - Create new airport
      */
 
-@PostMapping
-public ResponseEntity<?> createAirport(@RequestBody Airport airport) {
-    // Check if airport ID already exists
-    if (airport.getAirportId() != null && airportService.getAirportById(airport.getAirportId()).isPresent()) {
-        return new ResponseEntity<>("Airport with this ID already exists", HttpStatus.CONFLICT);
-    }
+    @PostMapping
+    public ResponseEntity<?> createAirport(@RequestBody Airport airport) {
+        // Validate required fields
+        if (airport.getName() == null || airport.getName().isEmpty()) {
+            return new ResponseEntity<>("Airport name is required", HttpStatus.BAD_REQUEST);
+        }
 
-    // Validate required fields
-    if (airport.getName() == null || airport.getName().isEmpty()) {
-        return new ResponseEntity<>("Airport name is required", HttpStatus.BAD_REQUEST);
-    }
+        if (airport.getCountry() == null || airport.getCountry().isEmpty()) {
+            return new ResponseEntity<>("Country is required", HttpStatus.BAD_REQUEST);
+        }
 
-    if (airport.getCountry() == null || airport.getCountry().isEmpty()) {
-        return new ResponseEntity<>("Country is required", HttpStatus.BAD_REQUEST);
-    }
+        if (airport.getCity() == null || airport.getCity().isEmpty()) {
+            return new ResponseEntity<>("City is required", HttpStatus.BAD_REQUEST);
+        }
 
-    if (airport.getCity() == null || airport.getCity().isEmpty()) {
-        return new ResponseEntity<>("City is required", HttpStatus.BAD_REQUEST);
-    }
+        if (airport.getCode() == null || airport.getCode().isEmpty()) {
+            return new ResponseEntity<>("Airport code is required", HttpStatus.BAD_REQUEST);
+        }
 
-    Airport createdAirport = airportService.saveAirport(airport);
-    return new ResponseEntity<>(createdAirport, HttpStatus.CREATED);
-}
+        if (airport.getCode().length() != 3) {
+            return new ResponseEntity<>("Airport code must be exactly 3 characters", HttpStatus.BAD_REQUEST);
+        }
+
+        Airport createdAirport = airportService.saveAirport(airport);
+        return new ResponseEntity<>(createdAirport, HttpStatus.CREATED);
+    }
 
     /**
      * PUT /api/airports/{id} - Update existing airport
      */
-    
+
 @PutMapping("/{id}")
 public ResponseEntity<?> updateAirport(@PathVariable Long id, @RequestBody Airport updatedAirport) {
     // Check if airport exists

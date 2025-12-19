@@ -2,7 +2,6 @@ package com.timeoutairline.epiline.model;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "airports")
 public class Airport {
@@ -20,6 +19,9 @@ public class Airport {
     @Column(nullable = false)
     private String city;
 
+    @Column(unique = true, nullable = false, length = 3)
+    private String code;
+
     // Constructors
     public Airport() {
     }
@@ -29,6 +31,7 @@ public class Airport {
         this.name = name;
         this.country = country;
         this.city = city;
+        this.code = code;
     }
 
     // Getters
@@ -48,6 +51,9 @@ public class Airport {
         return city;
     }
 
+    public String getCode() {
+        return code;
+    }
 
     // Setters
     public void setAirportId(Long airportId) {
@@ -66,6 +72,10 @@ public class Airport {
         this.city = city;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "Airport{" +
@@ -73,6 +83,7 @@ public class Airport {
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }
